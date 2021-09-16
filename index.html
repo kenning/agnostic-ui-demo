@@ -1,0 +1,50 @@
+<head>
+
+</head>
+<body>
+  <h1>agnostic ui</h1>
+
+  <div>
+    <button id="react-button">React</button>
+    <button id="vanilla-button">Vanilla</button>
+    <button id="vue-button">Vue</button>
+    <button id="svelte-button">Svelte</button>
+  </div>
+
+  <br/>
+
+  <div style="display: flex;">
+    <iframe id="iframe" width="300" height="300" ></iframe>
+
+
+    <pre id="the-code" style="display: inline-block; width: 300px; height: 300px;">
+    </pre>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('iframe')
+    const sourceCode = document.getElementById('the-code')
+
+    const load = (thingToLoad) =>  () => {
+      const url = '/' + thingToLoad + '.html'
+      iframe.src = url
+      fetch(url)
+        .then((res) =>  res.text())
+        .then((html) => {
+          sourceCode.innerText = html;
+        })
+    }
+
+    const loadReact = load('react');
+    const loadVanilla = load('vanilla');
+    const loadVue = load('vue');
+    const loadSvelte = load('svelte');
+
+    document.getElementById('react-button').addEventListener('click', loadReact)
+    document.getElementById('vue-button').addEventListener('click', loadVue)
+    document.getElementById('svelte-button').addEventListener('click', loadSvelte)
+    document.getElementById('vanilla-button').addEventListener('click', loadVanilla)
+
+    loadReact()
+  </script>
+</body>
